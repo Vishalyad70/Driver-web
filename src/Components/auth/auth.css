@@ -1,0 +1,171 @@
+.login_panel {
+    display: flex;
+}
+
+a {
+    text-decoration: none !important;
+    transition: all .3s linear;
+}
+
+a:hover {
+    color: #FF6002 !important;
+}
+
+.login_panel .login_form {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.login_panel .side_img {
+    width: 50%;
+    height: 100vh;
+    position: relative;
+}
+
+.login_panel .side_img img {
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
+    height: 100%;
+}
+
+.login_panel .side_img::after {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    left: 0;
+    height: 100%;
+    content: '';
+    background: rgb(31, 38, 40);
+    background: linear-gradient(180deg, rgba(31, 38, 40, 0.14047625886292014) 40%, rgba(31, 38, 40, 0.2413165949973739) 53%, rgba(0, 0, 0, 0.5046219171262255) 100%);
+}
+
+.login_panel form {
+    width: 100%;
+    max-width: 675px;
+}
+
+.login_panel form span {
+    color: #D6B987;
+    padding-right: 8px;
+}
+
+.login_panel form h5 {
+    font-weight: 700;
+    font-size: 50px;
+    margin-bottom: 15px;
+}
+
+.login_panel form p {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28px;
+    /* pri_60% */
+    color: rgba(22, 22, 22, 0.6);
+}
+
+.login_panel form label {
+    color: #000;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.login_panel .title_box {
+    padding-bottom: 30px;
+}
+
+.login_panel form input {
+    background: #F7F7F7;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    padding: 18px 15px;
+    padding-left: 66px;
+    color: rgba(22, 22, 22, 0.6);
+    transition: all .3s linear;
+}
+
+.logo_box {
+    margin-bottom: 80px;
+}
+
+.login_panel form input:focus {
+    box-shadow: none !important;
+    background-color: rgba(171, 141, 96, 0.08);
+    border-color: #FF6002;
+    color: rgba(22, 22, 22, 0.6);
+    transition: all .3s linear;
+}
+
+.login_panel form .form-control::placeholder {
+    color: rgba(22, 22, 22, 0.3);
+    font-size: 14px;
+    opacity: 0.2;
+    border: 1px solid #000000;
+    opacity: 1;
+    transition: all .3s linear;
+}
+
+.login_panel .dplay {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.login_panel .form-check {
+    display: flex;
+    align-items: center;
+}
+
+.login_panel .form-check .form-check-input {
+    padding: 0px;
+    margin-top: 1px;
+    border-color: rgba(22, 22, 22, 0.2);
+}
+
+.nazi {
+    position: relative;
+}
+
+.nazi svg {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 20px;
+    font-size: 30px;
+    color: #FF6002 !important;
+}
+
+.login_panel .form-check label {
+    margin-bottom: 0px;
+    font-size: 14px;
+    color: rgba(22, 22, 22, 0.6);
+    padding-left: 8px;
+    font-weight: 400 !important;
+}
+
+.forgot_pass {
+    font-size: 14px;
+    color: #000;
+    font-weight: 500;
+}
+
+.send_op {
+    display: block;
+    text-align: right !important;
+}
+
+.send_in {
+    color: #BEAFE2 !important;
+    font-size: 14px;
+}
+
+.form-control:disabled {
+    background-color: #E8E8E8 !important;
+    border: 1px solid #E8E8E8 !important;
+}
