@@ -27,10 +27,12 @@ const Sidebar = ({ history }) => {
             <span> Company</span>
           </li>
         </NavLink>
-        <li className="cursor" onClick={() => dispatch(logout(history))}>
-          <img src={imageurl.Logout} alt="" />
-          <span>Logout</span>
-        </li>
+        <a>
+          <li className="cursor" onClick={() => dispatch(logout(history))}>
+            <img src={imageurl.Logout} alt="" />
+            <span>Logout</span>
+          </li>
+        </a>
       </ul>
     </div>
   );
