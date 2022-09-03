@@ -8,6 +8,7 @@ import {
   RESET_FORM_SUBMITTING,
   SET_COMPANY_DETAIL,
   SET_COMPANY_LIST,
+  SET_DASHBOARD_COUNT,
 } from "../common/types";
 import { toast } from "react-toastify";
 
@@ -96,6 +97,26 @@ export const deleteCompany = async (companyId) => {
     } else {
       toast.error(data.message);
       return false;
+    }
+  } catch (err) {
+    toast.error(err.message);
+  }
+};
+
+export const getDashboardCount = () => async (dispatch) => {
+  try {
+    setToken();
+    const { data } = await AXIOS.get(APIs.GET_DASHBOARD_COUNT);
+
+    if (data.status) {
+      dispatch({
+        type: SET_DASHBOARD_COUNT,
+        payload: {
+          total_plats: data.record.total_plats || 0,
+          total_complaints: data.record.total_complaints || 0,
+          total_driver: data.record.total_driver || 0,
+        },
+      });
     }
   } catch (err) {
     toast.error(err.message);

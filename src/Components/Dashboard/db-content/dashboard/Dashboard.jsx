@@ -1,17 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { withRouter } from "react-router-dom";
-import imageurl from "../../../common/images";
 import { RecentTable } from "./RecentTable";
 import { Searchbar } from "../../../../Shared/Searchbar";
 import { Filter } from "../../../../Shared/Filter";
 import { DASHBOARD_CARDS } from "../../../common/constant";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getDashboardCount } from "../../../../store/actions/companyAction";
 const Dashboard = () => {
   const count = useSelector((state) => state.dashboard);
-  // const disptach = useDispatch();
-  // useEffect(() => {
-  //   disptach(getCount());
-  // }, [disptach]);
+  const disptach = useDispatch();
+  useEffect(() => {
+    disptach(getDashboardCount());
+  }, [disptach]);
 
   return (
     <div className="dashboard">

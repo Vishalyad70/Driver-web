@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { Filter } from "../../../../Shared/Filter";
 import { Searchbar } from "../../../../Shared/Searchbar";
@@ -9,6 +9,7 @@ import { getCompanies } from "../../../../store/actions/companyAction";
 import { connect } from "react-redux";
 import SiteLoader from "../../../SiteLoader/SiteLoader";
 const Company = ({ companies, loading, getCompanies }) => {
+  const [isCheck, setIsCheck] = useState([]);
   useEffect(() => {
     getCompanies({});
   }, [getCompanies]);
@@ -41,7 +42,11 @@ const Company = ({ companies, loading, getCompanies }) => {
       </div>
       <div className="white_box">
         <div className="open_nas">
-          <CompanyTable companies={companies || []} />
+          <CompanyTable
+            companies={companies || []}
+            isCheck={isCheck}
+            setIsCheck={setIsCheck}
+          />
         </div>
       </div>
     </div>

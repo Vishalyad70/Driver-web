@@ -8,21 +8,21 @@ const NAVIGATION = {
 const DASHBOARD_CARDS = [
   {
     id: 1,
-    dataKey: "totalPlateNo",
+    dataKey: "total_plats",
     title: "Total Plate number",
     link: "",
     icon: imageurl.plate,
   },
   {
     id: 2,
-    dataKey: "totalDriver",
+    dataKey: "total_driver",
     title: "Total Drivers",
     link: "",
     icon: imageurl.user,
   },
   {
     id: 3,
-    dataKey: "totalComplaint",
+    dataKey: "total_complaints",
     title: "Total Complaints",
     link: "",
     icon: imageurl.cop,

@@ -39,9 +39,9 @@ const companyReducer = (state = initialState, action) => {
   }
 };
 const dashboardState = {
-  totalPlateNo: 10,
-  totalDriver: 20,
-  totalComplaint: 3,
+  total_plats: 0,
+  total_complaints: 0,
+  total_driver: 0,
 };
 
 export const dashboardReducer = (state = dashboardState, action) => {

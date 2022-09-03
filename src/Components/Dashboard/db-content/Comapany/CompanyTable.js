@@ -1,20 +1,39 @@
-import React from "react";
-import { Table, InputGroup } from "react-bootstrap";
+import React, { useState } from "react";
+import { Table } from "react-bootstrap";
 import { Icon } from "@iconify/react";
 import imageurl from "../../../common/images";
 import { Link } from "react-router-dom";
 import { dateToFormat } from "../../../common/_helper";
-export const CompanyTable = ({ companies }) => {
+import Checkbox from "../../../../Shared/Checkbox";
+export const CompanyTable = ({ companies, setIsCheck, isCheck }) => {
+  const [isCheckAll, setIsCheckAll] = useState(false);
+  const handleSelectAll = (e) => {
+    setIsCheckAll(!isCheckAll);
+    setIsCheck(companies.map((li) => li.id));
+    if (isCheckAll) {
+      setIsCheck([]);
+    }
+  };
+
+  const handleClick = (e) => {
+    const { id, checked } = e.target;
+    setIsCheck([...isCheck, Number(id)]);
+    if (!checked) {
+      setIsCheck(isCheck.filter((item) => item !== Number(id)));
+    }
+  };
   return (
     <div>
       <Table className="recenttable" responsive>
         <thead>
           <tr>
             <th>
-              {" "}
-              <InputGroup>
-                <InputGroup.Checkbox aria-label="Checkbox for following text input" />
-              </InputGroup>
+              <Checkbox
+                name="selectAll"
+                id="selectAll"
+                handleClick={handleSelectAll}
+                isChecked={isCheckAll}
+              />
             </th>
             <th>Company Name</th>
             <th>Date and Time</th>
@@ -33,9 +52,13 @@ export const CompanyTable = ({ companies }) => {
             companies.map((company) => (
               <tr key={company.id}>
                 <td>
-                  <InputGroup>
-                    <InputGroup.Checkbox aria-label="Checkbox for following text input" />
-                  </InputGroup>
+                  <Checkbox
+                    key={company.id}
+                    id={company.id}
+                    name={`item_${company.id}`}
+                    handleClick={handleClick}
+                    isChecked={isCheck.includes(company.id)}
+                  />
                 </td>
                 <td>
                   <Link to={`/dashboard/company/company-details/${company.id}`}>
