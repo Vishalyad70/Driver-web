@@ -1,16 +1,17 @@
-const BASE_URL = "https://mmfinfotech.co/driver_app/api";
+// const BASE_URL = "https://mmfinfotech.co/driver_app/api";
+const BASE_URL = "https://roadeye.ae/driver_app_backend/api";
 
 const AUTHORIZATION = "Authorization";
 const COOKIE_EXPIRED = 60 * 60 * 24 * 365;
 const APIs = {
-  ADMIN_LOGIN: "/user/login",
-  FORGOT_PASSWORD: "/reset/forgot_password",
-  CHANGE_PASSWORD: "/reset/set_new_password",
-  ADD_COMPANY: "/company/add_company",
-  GET_COMPANY_DETAIL: "/company/company_details",
-  GET_COMPANIES: "/company/company_lists",
-  DELETE_COMPANY: "",
-  GET_RECENTLY_COMPANY: "",
+    ADMIN_LOGIN: "/user/login",
+    FORGOT_PASSWORD: "/reset/forgot_password",
+    CHANGE_PASSWORD: "/reset/set_new_password",
+    ADD_COMPANY: "/company/add_company",
+    GET_COMPANY_DETAIL: "/company/company_details",
+    GET_COMPANIES: "/company/company_lists",
+    DELETE_COMPANY: "",
+    GET_RECENTLY_COMPANY: "",
 };
 
 export { BASE_URL, COOKIE_EXPIRED, APIs, AUTHORIZATION };

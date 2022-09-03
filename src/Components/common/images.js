@@ -1,5 +1,5 @@
-// const baseurl = "http://localhost:3000/Driver-web";
-const baseurl = "https://www.mmfinfotech.co/Driver-web";
+// const baseurl = "http://localhost:3000/Driver-SuperAdmin";
+const baseurl = "https://roadeye.ae/Driver-SuperAdmin";
 
 const imageurl = {
     Banner: baseurl + "/images/banner.png",

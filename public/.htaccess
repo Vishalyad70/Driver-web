@@ -6,6 +6,6 @@
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteCond %{REQUEST_FILENAME} !-l
-  RewriteRule . /Driver-web/index.html [L]
+  RewriteRule . /Driver-SuperAdmin/index.html [L]
 
 </IfModule>

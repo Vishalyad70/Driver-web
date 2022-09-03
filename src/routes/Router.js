@@ -8,7 +8,7 @@ import ProtectedRoute from "./ProtectedRoute";
 
 export const Router = () => {
   return (
-    <BrowserRouter basename="/Driver-web">
+    <BrowserRouter basename="/Driver-SuperAdmin">
       <Switch>
         <Route exact path="/" component={Login} />
         <Route exact path="/forgot-password" component={ForgotPassword} />
