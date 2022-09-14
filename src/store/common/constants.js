@@ -13,6 +13,7 @@ const APIs = {
   GET_COMPANIES: "/company/company_lists",
   DELETE_COMPANY: "",
   GET_RECENTLY_COMPANY: "",
+  GET_RECENT_COMPANY: "/company/recent_company_lists",
 };
 
 export { BASE_URL, COOKIE_EXPIRED, APIs, AUTHORIZATION };

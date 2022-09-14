@@ -4,11 +4,14 @@ import { NAVIGATION } from "../../Components/common/constant";
 import {
   FETCH_COMPANY_ERROR,
   FETCH_COMPANY_LIST,
+  FETCH_RECENT_COMPANY_ERROR,
+  FETCH_RECENT_COMPANY_LIST,
   FORM_SUBMITTING,
   RESET_FORM_SUBMITTING,
   SET_COMPANY_DETAIL,
   SET_COMPANY_LIST,
   SET_DASHBOARD_COUNT,
+  SET_RECENT_COMPANY_LIST,
 } from "../common/types";
 import { toast } from "react-toastify";
 
@@ -120,5 +123,26 @@ export const getDashboardCount = () => async (dispatch) => {
     }
   } catch (err) {
     toast.error(err.message);
+  }
+};
+
+export const getRecentCompanies = (payload) => async (dispatch) => {
+  try {
+    setToken();
+    dispatch({ type: FETCH_RECENT_COMPANY_LIST });
+    const { data } = await AXIOS.get(APIs.GET_RECENT_COMPANY);
+
+    if (data.status) {
+      dispatch({
+        type: SET_RECENT_COMPANY_LIST,
+        payload: data.record || [],
+      });
+    }
+  } catch (err) {
+    toast.error(err.message);
+    dispatch({
+      type: FETCH_RECENT_COMPANY_ERROR,
+      payload: err,
+    });
   }
 };

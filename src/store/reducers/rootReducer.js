@@ -1,6 +1,9 @@
 import { combineReducers } from "redux";
 import authReducer, { loaderReducer, formReducer } from "./authReducer";
-import companyReducer, { dashboardReducer } from "./companyReducer";
+import companyReducer, {
+  dashboardReducer,
+  recentCompanyReducer,
+} from "./companyReducer";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -8,6 +11,7 @@ const rootReducer = combineReducers({
   form: formReducer,
   company: companyReducer,
   dashboard: dashboardReducer,
+  recent_company: recentCompanyReducer,
 });
 
 export default rootReducer;

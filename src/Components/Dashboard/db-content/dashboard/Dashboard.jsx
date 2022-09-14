@@ -1,16 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
-import { RecentTable } from "./RecentTable";
 import { Searchbar } from "../../../../Shared/Searchbar";
 import { Filter } from "../../../../Shared/Filter";
 import { DASHBOARD_CARDS } from "../../../common/constant";
 import { useSelector, useDispatch } from "react-redux";
-import { getDashboardCount } from "../../../../store/actions/companyAction";
+import {
+  getDashboardCount,
+  getRecentCompanies,
+} from "../../../../store/actions/companyAction";
+import SiteLoader from "../../../SiteLoader/SiteLoader";
+import { CompanyTable } from "../Comapany/CompanyTable";
 const Dashboard = () => {
   const count = useSelector((state) => state.dashboard);
+  const { loading, recent_companies } = useSelector(
+    (state) => state.recent_company
+  );
   const disptach = useDispatch();
+  const [isCheck, setIsCheck] = useState([]);
+
   useEffect(() => {
     disptach(getDashboardCount());
+    disptach(getRecentCompanies());
   }, [disptach]);
 
   return (
@@ -34,6 +44,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+      {loading ? <SiteLoader /> : null}
       <div className="white_box">
         <h5 className="db_title">Recent</h5>
         <div className="open_nas">
@@ -48,7 +59,12 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <RecentTable />
+
+          <CompanyTable
+            companies={recent_companies || []}
+            isCheck={isCheck}
+            setIsCheck={setIsCheck}
+          />
         </div>
       </div>
     </div>
