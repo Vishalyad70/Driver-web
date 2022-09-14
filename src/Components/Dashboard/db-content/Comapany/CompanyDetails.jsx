@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
@@ -11,22 +11,31 @@ import imageurl from "../../../common/images";
 import { connect } from "react-redux";
 import SiteLoader from "../../../SiteLoader/SiteLoader";
 import { getCompanyDetail } from "../../../../store/actions/companyAction";
-import { RESET_COMPANY_DETAIL } from "../../../../store/common/types";
+import {
+  RESET_COMPANY_DETAIL,
+  RESET_DRIVER_LIST,
+} from "../../../../store/common/types";
+import { getDrivers } from "../../../../store/actions/driverAction";
 
 const CompanyDetails = ({
   getCompanyDetail,
   resetDetail,
   loading,
   company_details,
+  drivers,
+  driver_loading,
+  getDrivers,
 }) => {
+  const [isCheck, setIsCheck] = useState([]);
   const { companyId } = useParams();
   useEffect(() => {
     getCompanyDetail(companyId);
+    getDrivers(companyId);
     return () => resetDetail();
-  }, [getCompanyDetail, companyId, resetDetail]);
+  }, [getCompanyDetail, getDrivers, companyId, resetDetail]);
   return (
     <div>
-      {loading ? <SiteLoader /> : null}
+      {loading || driver_loading ? <SiteLoader /> : null}
       <div className="view_box">
         <div className="web_status" style={{ justifyContent: "space-between" }}>
           <Link to="/dashboard/company">
@@ -157,7 +166,11 @@ const CompanyDetails = ({
                 </div>
               </div>
             </div>
-            <DriverStatus />
+            <DriverStatus
+              drivers={drivers}
+              setIsCheck={setIsCheck}
+              isCheck={isCheck}
+            />
           </div>
         </div>
       </div>
@@ -165,16 +178,25 @@ const CompanyDetails = ({
   );
 };
 
-const mapStateToProps = ({ company: { loading, company_details } }) => {
+const mapStateToProps = ({
+  company: { loading, company_details },
+  driver: { loading: driver_loading, drivers },
+}) => {
   return {
     loading,
     company_details,
+    drivers,
+    driver_loading,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     getCompanyDetail: (companyId) => dispatch(getCompanyDetail(companyId)),
-    resetDetail: () => dispatch({ type: RESET_COMPANY_DETAIL }),
+    getDrivers: (companyId) => dispatch(getDrivers(companyId)),
+    resetDetail: () => {
+      dispatch({ type: RESET_DRIVER_LIST });
+      dispatch({ type: RESET_COMPANY_DETAIL });
+    },
   };
 };
 

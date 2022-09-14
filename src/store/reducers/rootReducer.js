@@ -4,6 +4,7 @@ import companyReducer, {
   dashboardReducer,
   recentCompanyReducer,
 } from "./companyReducer";
+import driverReducer from "./driverReducer";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   company: companyReducer,
   dashboard: dashboardReducer,
   recent_company: recentCompanyReducer,
+  driver: driverReducer,
 });
 
 export default rootReducer;

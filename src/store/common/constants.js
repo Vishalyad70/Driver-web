@@ -14,6 +14,7 @@ const APIs = {
   DELETE_COMPANY: "",
   GET_RECENTLY_COMPANY: "",
   GET_RECENT_COMPANY: "/company/recent_company_lists",
+  GET_COMPANY_DRIVERS: "/company/company_driverlist",
 };
 
 export { BASE_URL, COOKIE_EXPIRED, APIs, AUTHORIZATION };
