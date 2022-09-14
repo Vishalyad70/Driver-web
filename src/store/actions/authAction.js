@@ -20,6 +20,7 @@ export const login =
 
       const { data } = await AXIOS.post(APIs.ADMIN_LOGIN, {
         ...payload,
+        user_types: "4",
       });
       dispatch({
         type: FORM_SUCCESS,
