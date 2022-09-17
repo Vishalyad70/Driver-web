@@ -36,10 +36,10 @@ export const DriverStatus = ({ drivers, setIsCheck, isCheck }) => {
             </th>
             <th>Car Plate Number</th>
             <th>Driver Name</th>
-            <th>Driver Status</th>
 
             <th>Date/Time Added</th>
             <th>Date/Time Deleted</th>
+            <th> Status</th>
           </tr>
         </thead>
         <tbody>
@@ -71,6 +71,8 @@ export const DriverStatus = ({ drivers, setIsCheck, isCheck }) => {
                     <small style={{ color: "#000000" }}>{driver.name}</small>
                   </div>
                 </td>
+                <td>{driver.joining_date}</td>
+                <td>{driver.deleted_at || "NA"}</td>
                 <td>
                   {driver.status === "1" && (
                     <span className="status green">Active</span>
@@ -82,8 +84,6 @@ export const DriverStatus = ({ drivers, setIsCheck, isCheck }) => {
                     <span className="status yellow">Delete</span>
                   )}
                 </td>
-                <td>{driver.joining_date}</td>
-                <td>{driver.deleted_at || "NA"}</td>
               </tr>
             ))}
 

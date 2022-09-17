@@ -1,9 +1,11 @@
 import { combineReducers } from "redux";
 import authReducer, { loaderReducer, formReducer } from "./authReducer";
+import carPlateReducer from "./carPlateReducer";
 import companyReducer, {
   dashboardReducer,
   recentCompanyReducer,
 } from "./companyReducer";
+import complaintReducer from "./complaintReducer";
 import driverReducer from "./driverReducer";
 
 const rootReducer = combineReducers({
@@ -14,6 +16,8 @@ const rootReducer = combineReducers({
   dashboard: dashboardReducer,
   recent_company: recentCompanyReducer,
   driver: driverReducer,
+  complaint: complaintReducer,
+  car_plate: carPlateReducer,
 });
 
 export default rootReducer;

@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import { Table, InputGroup } from "react-bootstrap";
-import { Icon } from "@iconify/react";
-import imageurl from "../../../common/images";
 import Checkbox from "../../../../Shared/Checkbox";
 
-export const DriverComplaint = ({ complaints, setIsCheck, isCheck }) => {
+export const CarPlateTable = ({ car_plates, setIsCheck, isCheck }) => {
   const [isCheckAll, setIsCheckAll] = useState(false);
   const handleSelectAll = (e) => {
     setIsCheckAll(!isCheckAll);
-    setIsCheck(complaints.map((li) => li.id));
+    setIsCheck(car_plates.map((li) => li.id));
     if (isCheckAll) {
       setIsCheck([]);
     }
@@ -35,31 +33,40 @@ export const DriverComplaint = ({ complaints, setIsCheck, isCheck }) => {
               />
             </th>
             <th>Car Plate Number</th>
-            <th>Driver Name</th>
-            <th>Complaint Reason</th>
-            <th>Date/Time</th>
-            <th>Location</th>
+            <th>Date/Time Added</th>
+            <th>Date/Time Deleted</th>
+            <th>Status</th>
           </tr>
         </thead>
         <tbody>
-          {complaints &&
-            complaints.length > 0 &&
-            complaints.map((complaint) => (
-              <tr key={complaint.id}>
+          {car_plates &&
+            car_plates.length > 0 &&
+            car_plates.map((plate) => (
+              <tr key={plate.id}>
                 <td>
                   <Checkbox
-                    key={complaint.id}
-                    id={complaint.id}
-                    name={`item_${complaint.id}`}
+                    key={plate.id}
+                    id={plate.id}
+                    name={`item_${plate.id}`}
                     handleClick={handleClick}
-                    isChecked={isCheck.includes(complaint.id)}
+                    isChecked={isCheck.includes(plate.id)}
                   />
                 </td>
-                <td>{complaint.car_plate_number}</td>
-                <td>{complaint.driver_name}</td>
-                <td>{complaint.complaint_reason}</td>
-                <td>{complaint.complaint_date}</td>
-                <td>{complaint.location || "NA"}</td>
+                <td>{plate.car_plate_number}</td>
+
+                <td>{plate.joining_date}</td>
+                <td>{plate.deleted_at || "NA"}</td>
+                <td>
+                  {plate.status === "1" && (
+                    <span className="status green">Active</span>
+                  )}
+                  {plate.status === "0" && (
+                    <span className="status red">Inactive</span>
+                  )}
+                  {plate.status === "2" && (
+                    <span className="status yellow">Deleted</span>
+                  )}
+                </td>
               </tr>
             ))}
         </tbody>

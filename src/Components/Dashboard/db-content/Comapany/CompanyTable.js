@@ -3,9 +3,13 @@ import { Table } from "react-bootstrap";
 import { Icon } from "@iconify/react";
 import imageurl from "../../../common/images";
 import { Link } from "react-router-dom";
-import { dateToFormat } from "../../../common/_helper";
 import Checkbox from "../../../../Shared/Checkbox";
-export const CompanyTable = ({ companies, setIsCheck, isCheck }) => {
+export const CompanyTable = ({
+  companies,
+  setIsCheck,
+  isCheck,
+  deleteHandler,
+}) => {
   const [isCheckAll, setIsCheckAll] = useState(false);
   const handleSelectAll = (e) => {
     setIsCheckAll(!isCheckAll);
@@ -40,9 +44,9 @@ export const CompanyTable = ({ companies, setIsCheck, isCheck }) => {
             <th>Total Car Plates</th>
             <th>Total Drivers</th>
             <th>Total Complaints</th>
-            <th>Rating</th>
-            <th>Description</th>
-            <th>Location</th>
+            {/* <th>Rating</th> */}
+            {/* <th>Description</th> */}
+            {/* <th>Location</th> */}
             <th></th>
           </tr>
         </thead>
@@ -72,18 +76,29 @@ export const CompanyTable = ({ companies, setIsCheck, isCheck }) => {
                   </Link>
                 </td>
                 <td>
-                  {dateToFormat(company.created_at, "MMM, DD, YYYY H:mm A")}
+                  {/* {dateToFormat(company.created_at, "MMM, DD, YYYY H:mm A")} */}
+                  <td>{company.date_time}</td>
                 </td>
                 <td>{company.total_numbar_plate}</td>
-                <td>@mdo</td>
-                <td>@mdo</td>
-                <td>@mdo</td>
-                <td>@mdo</td>
-                <td>
+                <td>{company.total_driver}</td>
+                <td>{company.total_complaints}</td>
+                {/* <td>{company.rating || 0}</td> */}
+                {/* <td>{company.total_complaints}</td> */}
+                {/* <td>
                   <p>4517 Washington Ave. Manchester, Kentucky 39495</p>
-                </td>
+                </td> */}
                 <td>
-                  <Icon icon="fluent:delete-24-filled" color="black" />
+                  <Link to={`/dashboard/company/edit-company/${company.id}`}>
+                    <Icon icon="eva:edit-fill" />
+                  </Link>
+                </td>
+
+                <td>
+                  <Icon
+                    onClick={() => deleteHandler(company.id)}
+                    icon="fluent:delete-24-filled"
+                    color="black cursor"
+                  />
                 </td>
               </tr>
             ))}

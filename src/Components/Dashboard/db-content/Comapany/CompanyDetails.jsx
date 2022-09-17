@@ -10,12 +10,19 @@ import { Row, Col, Form } from "react-bootstrap";
 import imageurl from "../../../common/images";
 import { connect } from "react-redux";
 import SiteLoader from "../../../SiteLoader/SiteLoader";
-import { getCompanyDetail } from "../../../../store/actions/companyAction";
 import {
+  getCarPlateList,
+  getCompanyDetail,
+  getComplaints,
+} from "../../../../store/actions/companyAction";
+import {
+  RESET_CAR_PLATE_LIST,
   RESET_COMPANY_DETAIL,
+  RESET_COMPLAINT_LIST,
   RESET_DRIVER_LIST,
 } from "../../../../store/common/types";
 import { getDrivers } from "../../../../store/actions/driverAction";
+import { CarPlateTable } from "./CarPlateTable";
 
 const CompanyDetails = ({
   getCompanyDetail,
@@ -25,17 +32,29 @@ const CompanyDetails = ({
   drivers,
   driver_loading,
   getDrivers,
+  complaint_loading,
+  complaints,
+  car_plate_loading,
+  car_plates,
+  getComplaints,
+  getCarPlateList,
 }) => {
   const [isCheck, setIsCheck] = useState([]);
+  const [isCheck2, setIsCheck2] = useState([]);
+  const [isCheck3, setIsCheck3] = useState([]);
   const { companyId } = useParams();
   useEffect(() => {
     getCompanyDetail(companyId);
+    getComplaints(companyId);
     getDrivers(companyId);
+    getCarPlateList(companyId);
     return () => resetDetail();
   }, [getCompanyDetail, getDrivers, companyId, resetDetail]);
   return (
     <div>
-      {loading || driver_loading ? <SiteLoader /> : null}
+      {loading || driver_loading || car_plate_loading || complaint_loading ? (
+        <SiteLoader />
+      ) : null}
       <div className="view_box">
         <div className="web_status" style={{ justifyContent: "space-between" }}>
           <Link to="/dashboard/company">
@@ -122,24 +141,27 @@ const CompanyDetails = ({
                       className="up_input"
                       placeholder="29"
                       disabled
+                      value={company_details.total_complaints}
                     />
                   </Form.Group>
                   <Form.Group
                     className="mb-4"
                     controlId="exampleForm.ControlInput1"
                   >
-                    <Form.Label>Total Complaints</Form.Label>
+                    <Form.Label>Total Drivers</Form.Label>
                     <Form.Control
                       type="number"
                       className="up_input"
                       placeholder="29"
                       disabled
+                      value={company_details.total_driver}
                     />
                   </Form.Group>
                 </Col>
               </Row>
             </Col>
           </Row>
+          <h3>Complaints Table</h3>
           <div className="grey_open">
             <div className="view_box mb-2">
               <div className="web_status">
@@ -152,8 +174,13 @@ const CompanyDetails = ({
                 </div>
               </div>
             </div>
-            <DriverComplaint />
+            <DriverComplaint
+              complaints={complaints}
+              setIsCheck={setIsCheck2}
+              isCheck={isCheck2}
+            />
           </div>
+          <h3>Driver Table </h3>
           <div className="grey_open">
             <div className="view_box mb-2">
               <div className="web_status">
@@ -172,6 +199,25 @@ const CompanyDetails = ({
               isCheck={isCheck}
             />
           </div>
+          <h3> Car Plate Table </h3>
+          <div className="grey_open">
+            <div className="view_box mb-2">
+              <div className="web_status">
+                <div
+                  className="second d-flex w-100"
+                  style={{ justifyContent: "space-between" }}
+                >
+                  <Searchbar />
+                  <Filter />
+                </div>
+              </div>
+            </div>
+            <CarPlateTable
+              car_plates={car_plates}
+              setIsCheck={setIsCheck2}
+              isCheck={isCheck2}
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -181,21 +227,31 @@ const CompanyDetails = ({
 const mapStateToProps = ({
   company: { loading, company_details },
   driver: { loading: driver_loading, drivers },
+  complaint: { loading: complaint_loading, complaints },
+  car_plate: { loading: car_plate_loading, car_plates },
 }) => {
   return {
     loading,
     company_details,
     drivers,
     driver_loading,
+    complaint_loading,
+    complaints,
+    car_plate_loading,
+    car_plates,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     getCompanyDetail: (companyId) => dispatch(getCompanyDetail(companyId)),
     getDrivers: (companyId) => dispatch(getDrivers(companyId)),
+    getComplaints: (companyId) => dispatch(getComplaints(companyId)),
+    getCarPlateList: (companyId) => dispatch(getCarPlateList(companyId)),
     resetDetail: () => {
       dispatch({ type: RESET_DRIVER_LIST });
       dispatch({ type: RESET_COMPANY_DETAIL });
+      dispatch({ type: RESET_CAR_PLATE_LIST });
+      dispatch({ type: RESET_COMPLAINT_LIST });
     },
   };
 };

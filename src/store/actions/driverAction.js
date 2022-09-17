@@ -1,6 +1,5 @@
 import AXIOS, { setToken } from "../common/api_helper";
 import { APIs } from "../common/constants";
-import { NAVIGATION } from "../../Components/common/constant";
 import {
   FETCH_DRIVER_ERROR,
   FETCH_DRIVER_LIST,

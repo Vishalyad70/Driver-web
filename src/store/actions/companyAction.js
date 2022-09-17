@@ -2,14 +2,20 @@ import AXIOS, { setToken } from "../common/api_helper";
 import { APIs } from "../common/constants";
 import { NAVIGATION } from "../../Components/common/constant";
 import {
+  FETCH_CAR_PLATE_ERROR,
+  FETCH_CAR_PLATE_LIST,
   FETCH_COMPANY_ERROR,
   FETCH_COMPANY_LIST,
+  FETCH_COMPLAINT_ERROR,
+  FETCH_COMPLAINT_LIST,
   FETCH_RECENT_COMPANY_ERROR,
   FETCH_RECENT_COMPANY_LIST,
   FORM_SUBMITTING,
   RESET_FORM_SUBMITTING,
+  SET_CAR_PLATE_LIST,
   SET_COMPANY_DETAIL,
   SET_COMPANY_LIST,
+  SET_COMPLAINT_LIST,
   SET_DASHBOARD_COUNT,
   SET_RECENT_COMPANY_LIST,
 } from "../common/types";
@@ -48,6 +54,40 @@ export const addCompany = (payload, resetForm, history) => async (dispatch) => {
     toast.error(err.response.data.message);
   }
 };
+export const editCompany =
+  (payload, resetForm, history) => async (dispatch) => {
+    try {
+      setToken();
+      let fd = new FormData();
+      for (let key in payload) {
+        fd.append(key, payload[key]);
+      }
+      dispatch({
+        type: FORM_SUBMITTING,
+      });
+      const { data } = await AXIOS({
+        method: "post",
+        url: APIs.EDIT_COMPANY,
+        data: fd,
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      dispatch({
+        type: RESET_FORM_SUBMITTING,
+      });
+      if (data.status) {
+        toast.success(data.message);
+        resetForm();
+        history.push(NAVIGATION.COMPANY);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (err) {
+      dispatch({
+        type: RESET_FORM_SUBMITTING,
+      });
+      toast.error(err.response.data.message);
+    }
+  };
 
 export const getCompanies = (payload) => async (dispatch) => {
   try {
@@ -142,6 +182,52 @@ export const getRecentCompanies = (payload) => async (dispatch) => {
     toast.error(err.message);
     dispatch({
       type: FETCH_RECENT_COMPANY_ERROR,
+      payload: err,
+    });
+  }
+};
+
+export const getCarPlateList = (companyId) => async (dispatch) => {
+  try {
+    setToken();
+    dispatch({ type: FETCH_CAR_PLATE_LIST });
+    const { data } = await AXIOS.get(
+      `${APIs.GET_COMPANY_CARPLATE_LIST}/${companyId}`
+    );
+
+    if (data.status) {
+      dispatch({
+        type: SET_CAR_PLATE_LIST,
+        payload: data.record || [],
+      });
+    }
+  } catch (err) {
+    toast.error(err.message);
+    dispatch({
+      type: FETCH_CAR_PLATE_ERROR,
+      payload: err,
+    });
+  }
+};
+
+export const getComplaints = (companyId) => async (dispatch) => {
+  try {
+    setToken();
+    dispatch({ type: FETCH_COMPLAINT_LIST });
+    const { data } = await AXIOS.get(
+      `${APIs.GET_COMPANY_COMPLAINT_LIST}/${companyId}`
+    );
+
+    if (data.status) {
+      dispatch({
+        type: SET_COMPLAINT_LIST,
+        payload: data.record || [],
+      });
+    }
+  } catch (err) {
+    toast.error(err.message);
+    dispatch({
+      type: FETCH_COMPLAINT_ERROR,
       payload: err,
     });
   }

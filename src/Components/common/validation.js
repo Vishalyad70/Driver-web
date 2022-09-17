@@ -31,7 +31,17 @@ export const addCompanyValidation = Yup.object().shape({
     .email("please enter valid email address")
     .required()
     .label("username"),
-  company_image: Yup.string().required().label("company image"),
+  company_image: Yup.string().optional().label("company image"),
   total_numbar_plate: Yup.number().required().label("no. of plate"),
   password: Yup.string().required().label("temporary password"),
+});
+export const editCompanyValidation = Yup.object().shape({
+  name: Yup.string().required().label("name"),
+  username: Yup.string()
+    .email("please enter valid email address")
+    .required()
+    .label("username"),
+  company_image: Yup.string().optional().label("company image"),
+  total_numbar_plate: Yup.number().required().label("no. of plate"),
+  // password: Yup.string().required().label("temporary password"),
 });

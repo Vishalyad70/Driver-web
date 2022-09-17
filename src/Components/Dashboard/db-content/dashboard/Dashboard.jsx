@@ -9,7 +9,7 @@ import {
   getRecentCompanies,
 } from "../../../../store/actions/companyAction";
 import SiteLoader from "../../../SiteLoader/SiteLoader";
-import { CompanyTable } from "../Comapany/CompanyTable";
+import { RecentTable } from "./RecentTable";
 const Dashboard = () => {
   const count = useSelector((state) => state.dashboard);
   const { loading, recent_companies } = useSelector(
@@ -60,7 +60,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <CompanyTable
+          <RecentTable
             companies={recent_companies || []}
             isCheck={isCheck}
             setIsCheck={setIsCheck}

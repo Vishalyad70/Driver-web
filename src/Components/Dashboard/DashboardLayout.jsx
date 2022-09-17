@@ -7,6 +7,7 @@ import Dashboard from "../Dashboard/db-content/dashboard/Dashboard";
 import { Header } from "./Header";
 import Company from "./db-content/Comapany/Company";
 import AddCompany from "./db-content/Comapany/AddCompany";
+import EditCompany from "./db-content/Comapany/EditCompany";
 import CompanyDetails from "./db-content/Comapany/CompanyDetails";
 
 const DashboardLayout = () => {
@@ -24,6 +25,11 @@ const DashboardLayout = () => {
                 exact
                 path="/dashboard/company/add-company"
                 component={AddCompany}
+              />
+              <Route
+                exact
+                path="/dashboard/company/edit-company/:companyId"
+                component={EditCompany}
               />
               <Route
                 exact

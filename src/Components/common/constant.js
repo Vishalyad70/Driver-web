@@ -28,4 +28,11 @@ const DASHBOARD_CARDS = [
     icon: imageurl.cop,
   },
 ];
-export { NAVIGATION, DASHBOARD_CARDS };
+const CUSTOM_PROPS = {
+  CONFIRMATION_DELETE: {
+    title: "Alert",
+    description: "Are you sure you want to delete this record",
+    confirmBtnText: "yes, delete",
+  },
+};
+export { NAVIGATION, DASHBOARD_CARDS, CUSTOM_PROPS };
