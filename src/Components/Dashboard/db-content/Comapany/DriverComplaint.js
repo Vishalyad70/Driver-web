@@ -62,6 +62,13 @@ export const DriverComplaint = ({ complaints, setIsCheck, isCheck }) => {
                 <td>{complaint.location || "NA"}</td>
               </tr>
             ))}
+          {complaints.length === 0 && (
+            <tr>
+              <td align="center" colSpan={6}>
+                No driver available
+              </td>
+            </tr>
+          )}
         </tbody>
       </Table>
     </div>

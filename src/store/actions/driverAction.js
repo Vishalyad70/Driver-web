@@ -7,25 +7,32 @@ import {
 } from "../common/types";
 import { toast } from "react-toastify";
 
-export const getDrivers = (companyId) => async (dispatch) => {
-  try {
-    setToken();
-    dispatch({ type: FETCH_DRIVER_LIST });
-    const { data } = await AXIOS.get(
-      `${APIs.GET_COMPANY_DRIVERS}/${companyId}`
-    );
+export const getDrivers =
+  (companyId, page = 1) =>
+  async (dispatch) => {
+    try {
+      setToken();
+      dispatch({ type: FETCH_DRIVER_LIST });
+      const { data } = await AXIOS.get(
+        `${APIs.GET_COMPANY_DRIVERS}/${companyId}?page=${page}`
+      );
 
-    if (data.status) {
+      if (data.status) {
+        dispatch({
+          type: SET_DRIVER_LIST,
+          payload: data.record || [],
+          pagination: {
+            currentPage: data.currentPage || 1,
+            per_page: data.per_page || 0,
+            total_record: data.total_record || 0,
+          },
+        });
+      }
+    } catch (err) {
+      toast.error(err.message);
       dispatch({
-        type: SET_DRIVER_LIST,
-        payload: data.record || [],
+        type: FETCH_DRIVER_ERROR,
+        payload: err,
       });
     }
-  } catch (err) {
-    toast.error(err.message);
-    dispatch({
-      type: FETCH_DRIVER_ERROR,
-      payload: err,
-    });
-  }
-};
+  };

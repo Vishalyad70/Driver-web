@@ -89,26 +89,43 @@ export const editCompany =
     }
   };
 
-export const getCompanies = (payload) => async (dispatch) => {
-  try {
-    setToken();
-    dispatch({ type: FETCH_COMPANY_LIST });
-    const { data } = await AXIOS.get(APIs.GET_COMPANIES);
+export const getCompanies =
+  (payload, page = 1) =>
+  async (dispatch) => {
+    try {
+      setToken();
+      dispatch({ type: FETCH_COMPANY_LIST });
+      const { data } = await AXIOS.get(`${APIs.GET_COMPANIES}?page=${page}`);
 
-    if (data.status) {
+      if (data.status) {
+        dispatch({
+          type: SET_COMPANY_LIST,
+          payload: data.record || [],
+          pagination: {
+            currentPage: data.currentPage || 1,
+            per_page: data.per_page || 0,
+            total_record: data.total_record || 0,
+          },
+        });
+      } else {
+        dispatch({
+          type: SET_COMPANY_LIST,
+          payload: [],
+          pagination: {
+            currentPage: 1,
+            per_page: 0,
+            total_record: 0,
+          },
+        });
+      }
+    } catch (err) {
+      toast.error(err.message);
       dispatch({
-        type: SET_COMPANY_LIST,
-        payload: data.record || [],
+        type: FETCH_COMPANY_ERROR,
+        payload: err,
       });
     }
-  } catch (err) {
-    toast.error(err.message);
-    dispatch({
-      type: FETCH_COMPANY_ERROR,
-      payload: err,
-    });
-  }
-};
+  };
 
 export const getCompanyDetail = (companyId) => async (dispatch, getState) => {
   try {
@@ -158,6 +175,7 @@ export const getDashboardCount = () => async (dispatch) => {
           total_plats: data.record.total_plats || 0,
           total_complaints: data.record.total_complaints || 0,
           total_driver: data.record.total_driver || 0,
+          total_company: data.record.total_company || 0,
         },
       });
     }
@@ -187,48 +205,62 @@ export const getRecentCompanies = (payload) => async (dispatch) => {
   }
 };
 
-export const getCarPlateList = (companyId) => async (dispatch) => {
-  try {
-    setToken();
-    dispatch({ type: FETCH_CAR_PLATE_LIST });
-    const { data } = await AXIOS.get(
-      `${APIs.GET_COMPANY_CARPLATE_LIST}/${companyId}`
-    );
+export const getCarPlateList =
+  (companyId, page = 1) =>
+  async (dispatch) => {
+    try {
+      setToken();
+      dispatch({ type: FETCH_CAR_PLATE_LIST });
+      const { data } = await AXIOS.get(
+        `${APIs.GET_COMPANY_CARPLATE_LIST}/${companyId}?page=${page}`
+      );
 
-    if (data.status) {
+      if (data.status) {
+        dispatch({
+          type: SET_CAR_PLATE_LIST,
+          payload: data.record || [],
+          pagination: {
+            currentPage: data.currentPage || 1,
+            per_page: data.per_page || 0,
+            total_record: data.total_record || 0,
+          },
+        });
+      }
+    } catch (err) {
+      toast.error(err.message);
       dispatch({
-        type: SET_CAR_PLATE_LIST,
-        payload: data.record || [],
+        type: FETCH_CAR_PLATE_ERROR,
+        payload: err,
       });
     }
-  } catch (err) {
-    toast.error(err.message);
-    dispatch({
-      type: FETCH_CAR_PLATE_ERROR,
-      payload: err,
-    });
-  }
-};
+  };
 
-export const getComplaints = (companyId) => async (dispatch) => {
-  try {
-    setToken();
-    dispatch({ type: FETCH_COMPLAINT_LIST });
-    const { data } = await AXIOS.get(
-      `${APIs.GET_COMPANY_COMPLAINT_LIST}/${companyId}`
-    );
+export const getComplaints =
+  (companyId, page = 1) =>
+  async (dispatch) => {
+    try {
+      setToken();
+      dispatch({ type: FETCH_COMPLAINT_LIST });
+      const { data } = await AXIOS.get(
+        `${APIs.GET_COMPANY_COMPLAINT_LIST}/${companyId}?page=${page}`
+      );
 
-    if (data.status) {
+      if (data.status) {
+        dispatch({
+          type: SET_COMPLAINT_LIST,
+          payload: data.record || [],
+          pagination: {
+            currentPage: data.currentPage || 1,
+            per_page: data.per_page || 0,
+            total_record: data.total_record || 0,
+          },
+        });
+      }
+    } catch (err) {
+      toast.error(err.message);
       dispatch({
-        type: SET_COMPLAINT_LIST,
-        payload: data.record || [],
+        type: FETCH_COMPLAINT_ERROR,
+        payload: err,
       });
     }
-  } catch (err) {
-    toast.error(err.message);
-    dispatch({
-      type: FETCH_COMPLAINT_ERROR,
-      payload: err,
-    });
-  }
-};
+  };

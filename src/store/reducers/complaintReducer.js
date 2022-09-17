@@ -9,6 +9,9 @@ const initialState = {
   error: "",
   loading: false,
   complaints: [],
+  currentPage: 1,
+  per_page: 0,
+  total_record: 0,
 };
 
 const complaintReducer = (state = initialState, action) => {
@@ -19,12 +22,20 @@ const complaintReducer = (state = initialState, action) => {
         loading: true,
       };
     case SET_COMPLAINT_LIST:
-      return { ...state, complaints: [...action.payload], loading: false };
+      return {
+        ...state,
+        complaints: [...action.payload],
+        ...action.pagination,
+        loading: false,
+      };
 
     case FETCH_COMPLAINT_ERROR:
       return {
         ...state,
         loading: false,
+        currentPage: 1,
+        per_page: 0,
+        total_record: 0,
         error: action.payload,
       };
     case RESET_COMPLAINT_LIST:

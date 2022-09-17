@@ -23,6 +23,7 @@ import {
 } from "../../../../store/common/types";
 import { getDrivers } from "../../../../store/actions/driverAction";
 import { CarPlateTable } from "./CarPlateTable";
+import Paginate from "../../../../Shared/Paginate/Paginate";
 
 const CompanyDetails = ({
   getCompanyDetail,
@@ -38,6 +39,15 @@ const CompanyDetails = ({
   car_plates,
   getComplaints,
   getCarPlateList,
+  currentPage,
+  per_page,
+  total_record,
+  currentPage1,
+  per_page1,
+  total_record1,
+  currentPage2,
+  per_page2,
+  total_record2,
 }) => {
   const [isCheck, setIsCheck] = useState([]);
   const [isCheck2, setIsCheck2] = useState([]);
@@ -50,6 +60,16 @@ const CompanyDetails = ({
     getCarPlateList(companyId);
     return () => resetDetail();
   }, [getCompanyDetail, getDrivers, companyId, resetDetail]);
+
+  const handlePageClick1 = ({ selected: page }) => {
+    getComplaints(companyId, page + 1);
+  };
+  const handlePageClick2 = ({ selected: page }) => {
+    getDrivers(companyId, page + 1);
+  };
+  const handlePageClick3 = ({ selected: page }) => {
+    getCarPlateList(companyId, page + 1);
+  };
   return (
     <div>
       {loading || driver_loading || car_plate_loading || complaint_loading ? (
@@ -120,7 +140,7 @@ const CompanyDetails = ({
                     className="mb-4"
                     controlId="exampleForm.ControlInput1"
                   >
-                    <Form.Label>Total Plate Numbers</Form.Label>
+                    <Form.Label>Total Allowed Plate Numbers</Form.Label>
                     <Form.Control
                       type="text"
                       className="up_input"
@@ -157,6 +177,19 @@ const CompanyDetails = ({
                       value={company_details.total_driver}
                     />
                   </Form.Group>
+                  <Form.Group
+                    className="mb-4"
+                    controlId="exampleForm.ControlInput1"
+                  >
+                    <Form.Label>Total Car Plates Remaining</Form.Label>
+                    <Form.Control
+                      type="text"
+                      className="up_input"
+                      placeholder="45"
+                      disabled
+                      value={company_details.total_car_plats_available}
+                    />
+                  </Form.Group>
                 </Col>
               </Row>
             </Col>
@@ -179,6 +212,19 @@ const CompanyDetails = ({
               setIsCheck={setIsCheck2}
               isCheck={isCheck2}
             />
+            {complaints && complaints.length > 0 && (
+              <div className="d-flex justify-content-between p-4">
+                <div>
+                  <h5>Total {total_record1} records</h5>
+                </div>
+                <Paginate
+                  totalCounts={total_record1}
+                  perPage={per_page1}
+                  currentPage={currentPage1}
+                  handlePageClick={handlePageClick1}
+                />
+              </div>
+            )}
           </div>
           <h3>Driver Table </h3>
           <div className="grey_open">
@@ -198,6 +244,19 @@ const CompanyDetails = ({
               setIsCheck={setIsCheck}
               isCheck={isCheck}
             />
+            {drivers && drivers.length > 0 && (
+              <div className="d-flex justify-content-between p-4">
+                <div>
+                  <h5>Total {total_record2} records</h5>
+                </div>
+                <Paginate
+                  totalCounts={total_record2}
+                  perPage={per_page2}
+                  currentPage={currentPage2}
+                  handlePageClick={handlePageClick2}
+                />
+              </div>
+            )}
           </div>
           <h3> Car Plate Table </h3>
           <div className="grey_open">
@@ -217,6 +276,19 @@ const CompanyDetails = ({
               setIsCheck={setIsCheck2}
               isCheck={isCheck2}
             />
+            {car_plates && car_plates.length > 0 && (
+              <div className="d-flex justify-content-between p-4">
+                <div>
+                  <h5>Total {total_record} records</h5>
+                </div>
+                <Paginate
+                  totalCounts={total_record}
+                  perPage={per_page}
+                  currentPage={currentPage}
+                  handlePageClick={handlePageClick3}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -226,9 +298,27 @@ const CompanyDetails = ({
 
 const mapStateToProps = ({
   company: { loading, company_details },
-  driver: { loading: driver_loading, drivers },
-  complaint: { loading: complaint_loading, complaints },
-  car_plate: { loading: car_plate_loading, car_plates },
+  driver: {
+    loading: driver_loading,
+    drivers,
+    currentPage: currentPage2,
+    per_page: per_page2,
+    total_record: total_record2,
+  },
+  complaint: {
+    loading: complaint_loading,
+    complaints,
+    currentPage: currentPage1,
+    per_page: per_page1,
+    total_record: total_record1,
+  },
+  car_plate: {
+    loading: car_plate_loading,
+    car_plates,
+    currentPage,
+    per_page,
+    total_record,
+  },
 }) => {
   return {
     loading,
@@ -239,14 +329,25 @@ const mapStateToProps = ({
     complaints,
     car_plate_loading,
     car_plates,
+    currentPage,
+    per_page,
+    total_record,
+    currentPage1,
+    per_page1,
+    total_record1,
+    currentPage2,
+    per_page2,
+    total_record2,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     getCompanyDetail: (companyId) => dispatch(getCompanyDetail(companyId)),
-    getDrivers: (companyId) => dispatch(getDrivers(companyId)),
-    getComplaints: (companyId) => dispatch(getComplaints(companyId)),
-    getCarPlateList: (companyId) => dispatch(getCarPlateList(companyId)),
+    getDrivers: (companyId, page) => dispatch(getDrivers(companyId, page)),
+    getComplaints: (companyId, page) =>
+      dispatch(getComplaints(companyId, page)),
+    getCarPlateList: (companyId, page) =>
+      dispatch(getCarPlateList(companyId, page)),
     resetDetail: () => {
       dispatch({ type: RESET_DRIVER_LIST });
       dispatch({ type: RESET_COMPANY_DETAIL });

@@ -15,6 +15,9 @@ const initialState = {
   loading: false,
   companies: [],
   company_details: {},
+  currentPage: 1,
+  per_page: 0,
+  total_record: 0,
 };
 
 const companyReducer = (state = initialState, action) => {
@@ -25,13 +28,21 @@ const companyReducer = (state = initialState, action) => {
         loading: true,
       };
     case SET_COMPANY_LIST:
-      return { ...state, companies: [...action.payload], loading: false };
+      return {
+        ...state,
+        companies: [...action.payload],
+        ...action.pagination,
+        loading: false,
+      };
 
     case FETCH_COMPANY_ERROR:
       return {
         ...state,
         loading: false,
         error: action.payload,
+        currentPage: 1,
+        per_page: 0,
+        total_record: 0,
       };
     case SET_COMPANY_DETAIL:
       return { ...state, loading: false, company_details: action.payload };
@@ -45,6 +56,7 @@ const dashboardState = {
   total_plats: 0,
   total_complaints: 0,
   total_driver: 0,
+  total_company: 0,
 };
 
 export const dashboardReducer = (state = dashboardState, action) => {

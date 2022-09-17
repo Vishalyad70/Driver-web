@@ -9,6 +9,9 @@ const initialState = {
   error: "",
   loading: false,
   drivers: [],
+  currentPage: 1,
+  per_page: 0,
+  total_record: 0,
 };
 
 const driverReducer = (state = initialState, action) => {
@@ -19,12 +22,20 @@ const driverReducer = (state = initialState, action) => {
         loading: true,
       };
     case SET_DRIVER_LIST:
-      return { ...state, drivers: [...action.payload], loading: false };
+      return {
+        ...state,
+        drivers: [...action.payload],
+        ...action.pagination,
+        loading: false,
+      };
 
     case FETCH_DRIVER_ERROR:
       return {
         ...state,
         loading: false,
+        currentPage: 1,
+        per_page: 0,
+        total_record: 0,
         error: action.payload,
       };
     case RESET_DRIVER_LIST:

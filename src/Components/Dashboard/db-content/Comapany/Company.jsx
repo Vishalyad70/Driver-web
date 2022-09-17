@@ -13,10 +13,19 @@ import { connect } from "react-redux";
 import SiteLoader from "../../../SiteLoader/SiteLoader";
 import { CUSTOM_PROPS } from "../../../common/constant";
 import ConfirmationModal from "../../../modal/ConfirmationModal";
-const Company = ({ companies, loading, getCompanies }) => {
+import Paginate from "../../../../Shared/Paginate/Paginate";
+const Company = ({
+  companies,
+  loading,
+  getCompanies,
+  currentPage,
+  per_page,
+  total_record,
+}) => {
   const [isCheck, setIsCheck] = useState([]);
   const [modalShow, setModalShow] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
+
   useEffect(() => {
     getCompanies({});
   }, [getCompanies]);
@@ -37,6 +46,10 @@ const Company = ({ companies, loading, getCompanies }) => {
         setModalShow(false);
         setDeleteId(null);
       });
+  };
+
+  const handlePageClick = ({ selected: page }) => {
+    getCompanies({}, page + 1);
   };
 
   return (
@@ -73,6 +86,19 @@ const Company = ({ companies, loading, getCompanies }) => {
             setIsCheck={setIsCheck}
             deleteHandler={deleteHandler}
           />
+          {companies && companies.length > 0 && (
+            <div className="d-flex justify-content-between p-4">
+              <div>
+                <h5>Total {total_record} records</h5>
+              </div>
+              <Paginate
+                totalCounts={total_record}
+                perPage={per_page}
+                currentPage={currentPage}
+                handlePageClick={handlePageClick}
+              />
+            </div>
+          )}
         </div>
         {modalShow && (
           <ConfirmationModal
@@ -87,15 +113,20 @@ const Company = ({ companies, loading, getCompanies }) => {
   );
 };
 
-const mapStateToProps = ({ company: { loading, companies } }) => {
+const mapStateToProps = ({
+  company: { loading, companies, currentPage, per_page, total_record },
+}) => {
   return {
     loading,
     companies,
+    currentPage,
+    per_page,
+    total_record,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    getCompanies: (payload) => dispatch(getCompanies(payload)),
+    getCompanies: (payload, page) => dispatch(getCompanies(payload, page)),
   };
 };
 

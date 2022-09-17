@@ -9,6 +9,9 @@ const initialState = {
   error: "",
   loading: false,
   car_plates: [],
+  currentPage: 1,
+  per_page: 0,
+  total_record: 0,
 };
 
 const carPlateReducer = (state = initialState, action) => {
@@ -19,12 +22,20 @@ const carPlateReducer = (state = initialState, action) => {
         loading: true,
       };
     case SET_CAR_PLATE_LIST:
-      return { ...state, car_plates: [...action.payload], loading: false };
+      return {
+        ...state,
+        car_plates: [...action.payload],
+        ...action.pagination,
+        loading: false,
+      };
 
     case FETCH_CAR_PLATE_ERROR:
       return {
         ...state,
         loading: false,
+        currentPage: 1,
+        per_page: 0,
+        total_record: 0,
         error: action.payload,
       };
     case RESET_CAR_PLATE_LIST:

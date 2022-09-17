@@ -42,7 +42,7 @@ export const RecentTable = ({ companies, setIsCheck, isCheck }) => {
             <th>Total Complaints</th>
             <th>Date & Time of Registeration </th>
 
-            <th></th>
+            {/* <th></th> */}
           </tr>
         </thead>
         <tbody>
@@ -79,9 +79,9 @@ export const RecentTable = ({ companies, setIsCheck, isCheck }) => {
                 </td> */}
                 <td>{company.date_time}</td>
 
-                <td>
+                {/* <td>
                   <Icon icon="fluent:delete-24-filled" color="black" />
-                </td>
+                </td> */}
               </tr>
             ))}
         </tbody>

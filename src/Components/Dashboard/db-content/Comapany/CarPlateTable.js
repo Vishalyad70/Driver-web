@@ -69,6 +69,13 @@ export const CarPlateTable = ({ car_plates, setIsCheck, isCheck }) => {
                 </td>
               </tr>
             ))}
+          {car_plates.length === 0 && (
+            <tr>
+              <td align="center" colSpan={5}>
+                No carplate available
+              </td>
+            </tr>
+          )}
         </tbody>
       </Table>
     </div>

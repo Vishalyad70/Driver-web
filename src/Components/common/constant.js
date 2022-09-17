@@ -27,6 +27,13 @@ const DASHBOARD_CARDS = [
     link: "",
     icon: imageurl.cop,
   },
+  {
+    id: 3,
+    dataKey: "total_company",
+    title: "Total Companies",
+    link: "",
+    icon: imageurl.cop,
+  },
 ];
 const CUSTOM_PROPS = {
   CONFIRMATION_DELETE: {

@@ -34,7 +34,7 @@ export const DriverStatus = ({ drivers, setIsCheck, isCheck }) => {
                 isChecked={isCheckAll}
               />
             </th>
-            <th>Car Plate Number</th>
+
             <th>Driver Name</th>
 
             <th>Date/Time Added</th>
@@ -56,7 +56,6 @@ export const DriverStatus = ({ drivers, setIsCheck, isCheck }) => {
                     isChecked={isCheck.includes(driver.id)}
                   />
                 </td>
-                <td>{driver.car_plate_number || "NA"}</td>
 
                 <td>
                   <div className="use_img">
@@ -90,7 +89,7 @@ export const DriverStatus = ({ drivers, setIsCheck, isCheck }) => {
           {drivers.length === 0 && (
             <tr>
               <td align="center" colSpan={6}>
-                No driver found
+                No driver available
               </td>
             </tr>
           )}
