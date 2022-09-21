@@ -116,7 +116,10 @@ export const forgotPassword =
       dispatch({
         type: FORM_SUBMITTING,
       });
-      const { data } = await AXIOS.post(APIs.FORGOT_PASSWORD, { ...payload });
+      const { data } = await AXIOS.post(APIs.FORGOT_PASSWORD, {
+        ...payload,
+        user_types: "4",
+      });
       dispatch({
         type: FORM_SUCCESS,
       });
