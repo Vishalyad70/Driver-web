@@ -264,3 +264,26 @@ export const getComplaints =
       });
     }
   };
+
+export const downloadCSV = async (setDownloading) => {
+  try {
+    setToken();
+    const { data } = await AXIOS.get(APIs.DOWNLOAD_COMPANY_CSV);
+    // const data = await response.text();
+    const blob = new Blob([data], { type: "data:text/csv;charset=utf-8," });
+    const blobURL = window.URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.download = `company-list.csv`;
+    anchor.href = blobURL;
+    anchor.dataset.downloadurl = [
+      "text/csv",
+      anchor.download,
+      anchor.href,
+    ].join(":");
+    anchor.click();
+    setDownloading(false);
+  } catch (err) {
+    setDownloading(false);
+    toast.error(err.message);
+  }
+};

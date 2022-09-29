@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { CompanyTable } from "./CompanyTable";
 import {
   deleteCompany,
+  downloadCSV,
   getCompanies,
 } from "../../../../store/actions/companyAction";
 import { connect } from "react-redux";
@@ -25,6 +26,7 @@ const Company = ({
   const [isCheck, setIsCheck] = useState([]);
   const [modalShow, setModalShow] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
+  const [downloading, setDownloading] = useState(false);
 
   useEffect(() => {
     getCompanies({});
@@ -65,9 +67,16 @@ const Company = ({
             <div className="second d-flex">
               <Searchbar />
               <Filter />
-              <button className="sign_btn down_csv d-block ms-3 me-3">
+              <button
+                className="sign_btn down_csv d-block ms-3 me-3"
+                onClick={() => {
+                  setDownloading(true);
+                  downloadCSV(setDownloading);
+                }}
+                disabled={downloading}
+              >
                 <Icon icon="fa6-solid:download" color="black" />
-                <span>Download CSV</span>
+                <span>{downloading ? "Downloading..." : "Download CSV"}</span>
               </button>
               <Link to="/dashboard/company/add-company">
                 <button className="sign_btn add_com d-block">
