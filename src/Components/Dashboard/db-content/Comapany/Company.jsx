@@ -74,7 +74,11 @@ const Company = ({
     deleteCompany(deleteId)
       .then((res) => {
         if (res) {
-          getCompanies({});
+          getCompanies({
+            search: search ? search : "",
+            from_date: "",
+            to_date: "",
+          });
         }
       })
       .finally(() => {
@@ -86,7 +90,7 @@ const Company = ({
   const handlePageClick = ({ selected: page }) => {
     getCompanies(
       {
-        search: search,
+        search: search ? search : "",
         from_date: "",
         to_date: "",
       },
