@@ -20,5 +20,5 @@ const APIs = {
   GET_COMPANY_COMPLAINT_LIST: "/company/driver_complaintsList",
   DOWNLOAD_COMPANY_CSV: "/company/download_csv_companyList",
 };
-
+ 
 export { BASE_URL, COOKIE_EXPIRED, APIs, AUTHORIZATION };

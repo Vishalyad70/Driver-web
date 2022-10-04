@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
-import { Filter } from "../../../../Shared/Filter";
-import { Searchbar } from "../../../../Shared/Searchbar";
+import CalenderFilter from "../../../../Shared/CalenderFilter";
+import { SearchbarFilter } from "../../../../Shared/SearchbarFilter";
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
 import { CompanyTable } from "./CompanyTable";
@@ -27,10 +27,43 @@ const Company = ({
   const [modalShow, setModalShow] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const [downloading, setDownloading] = useState(false);
+  const [search, setSearch] = useState(null);
+  const [dates, setDates] = useState([]);
 
   useEffect(() => {
-    getCompanies({});
+    getCompanies({
+      search: "",
+      from_date: "",
+      to_date: "",
+    });
   }, [getCompanies]);
+
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      if (search || search !== null) {
+        getCompanies({
+          search: search,
+          from_date: "",
+          to_date: "",
+        });
+      }
+    }, 500);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [search, getCompanies]);
+
+  const handleSelect = (array) => {
+    let range = array.join(",").split(",");
+    setDates([...range]);
+
+    if (range.length === 2) {
+      getCompanies({
+        search: search ? search : "",
+        from_date: range[0],
+        to_date: range[1],
+      });
+    }
+  };
 
   const deleteHandler = (companyId) => {
     setDeleteId(companyId);
@@ -51,7 +84,14 @@ const Company = ({
   };
 
   const handlePageClick = ({ selected: page }) => {
-    getCompanies({}, page + 1);
+    getCompanies(
+      {
+        search: search,
+        from_date: "",
+        to_date: "",
+      },
+      page + 1
+    );
   };
 
   return (
@@ -65,8 +105,8 @@ const Company = ({
             {loading ? <SiteLoader /> : null}
             <h5 className="mb-0 db_title">All Companies</h5>
             <div className="second d-flex">
-              <Searchbar />
-              <Filter />
+              <SearchbarFilter setSearch={setSearch} search={search} />
+              <CalenderFilter handleSelect={handleSelect} dates={dates} />
               <button
                 className="sign_btn down_csv d-block ms-3 me-3"
                 onClick={() => {

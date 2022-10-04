@@ -95,7 +95,9 @@ export const getCompanies =
     try {
       setToken();
       dispatch({ type: FETCH_COMPANY_LIST });
-      const { data } = await AXIOS.get(`${APIs.GET_COMPANIES}?page=${page}`);
+      const { data } = await AXIOS.post(`${APIs.GET_COMPANIES}?page=${page}`, {
+        ...payload,
+      });
 
       if (data.status) {
         dispatch({
@@ -206,13 +208,14 @@ export const getRecentCompanies = (payload) => async (dispatch) => {
 };
 
 export const getCarPlateList =
-  (companyId, page = 1) =>
+  (payload, page = 1) =>
   async (dispatch) => {
     try {
       setToken();
       dispatch({ type: FETCH_CAR_PLATE_LIST });
-      const { data } = await AXIOS.get(
-        `${APIs.GET_COMPANY_CARPLATE_LIST}/${companyId}?page=${page}`
+      const { data } = await AXIOS.post(
+        `${APIs.GET_COMPANY_CARPLATE_LIST}?page=${page}`,
+        { ...payload }
       );
 
       if (data.status) {
@@ -236,13 +239,14 @@ export const getCarPlateList =
   };
 
 export const getComplaints =
-  (companyId, page = 1) =>
+  (payload, page = 1) =>
   async (dispatch) => {
     try {
       setToken();
       dispatch({ type: FETCH_COMPLAINT_LIST });
-      const { data } = await AXIOS.get(
-        `${APIs.GET_COMPANY_COMPLAINT_LIST}/${companyId}?page=${page}`
+      const { data } = await AXIOS.post(
+        `${APIs.GET_COMPANY_COMPLAINT_LIST}?page=${page}`,
+        { ...payload }
       );
 
       if (data.status) {

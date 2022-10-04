@@ -54,3 +54,8 @@ input[type="number"] {
 .err_red {
   color: red !important;
 }
+
+.custom__calender {
+  position: relative;
+  top: 12px;
+}

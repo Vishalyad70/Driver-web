@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
-import { Searchbar } from "../../../../Shared/Searchbar";
+import { SearchbarFilter } from "../../../../Shared/SearchbarFilter";
 import { Filter } from "../../../../Shared/Filter";
 import { DriverComplaint } from "./DriverComplaint";
 import { DriverStatus } from "./DriverStatus";
@@ -24,6 +24,7 @@ import {
 import { getDrivers } from "../../../../store/actions/driverAction";
 import { CarPlateTable } from "./CarPlateTable";
 import Paginate from "../../../../Shared/Paginate/Paginate";
+import CalenderFilter from "../../../../Shared/CalenderFilter";
 
 const CompanyDetails = ({
   getCompanyDetail,
@@ -53,22 +54,153 @@ const CompanyDetails = ({
   const [isCheck2, setIsCheck2] = useState([]);
   const [isCheck3, setIsCheck3] = useState([]);
   const { companyId } = useParams();
+  const [searchOne, setSearchOne] = useState(null);
+  const [searchTwo, setSearchTwo] = useState(null);
+  const [searchThree, setSearchThree] = useState(null);
+  const [datesOne, setDatesOne] = useState([]);
+  const [datesTwo, setDatesTwo] = useState([]);
+  const [datesThree, setDatesThree] = useState([]);
+
   useEffect(() => {
     getCompanyDetail(companyId);
-    getComplaints(companyId);
-    getDrivers(companyId);
-    getCarPlateList(companyId);
+    getComplaints({
+      company_id: companyId,
+      search: "",
+      from_date: "",
+      to_date: "",
+    });
+    getDrivers({
+      company_id: companyId,
+      search: "",
+      from_date: "",
+      to_date: "",
+    });
+    getCarPlateList({
+      company_id: companyId,
+      search: "",
+      from_date: "",
+      to_date: "",
+    });
     return () => resetDetail();
   }, [getCompanyDetail, getDrivers, companyId, resetDetail]);
 
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      if (searchOne || searchOne !== null) {
+        getComplaints({
+          company_id: companyId,
+          search: searchOne,
+          from_date: "",
+          to_date: "",
+        });
+      }
+    }, 500);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchOne, getComplaints, companyId]);
+
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      if (searchTwo || searchTwo !== null) {
+        getDrivers({
+          company_id: companyId,
+          search: searchTwo,
+          from_date: "",
+          to_date: "",
+        });
+      }
+    }, 500);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchTwo, getDrivers, companyId]);
+
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      if (searchThree || searchThree !== null) {
+        getCarPlateList({
+          company_id: companyId,
+          search: searchThree,
+          from_date: "",
+          to_date: "",
+        });
+      }
+    }, 500);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchThree, getCarPlateList, companyId]);
+
+  const handleSelect1 = (array) => {
+    let range = array.join(",").split(",");
+    setDatesOne([...range]);
+
+    if (range.length === 2) {
+      getComplaints({
+        company_id: companyId,
+        search: searchOne ? searchOne : "",
+        from_date: range[0],
+        to_date: range[1],
+      });
+    }
+  };
+  const handleSelect2 = (array) => {
+    let range = array.join(",").split(",");
+    setDatesTwo([...range]);
+
+    if (range.length === 2) {
+      getDrivers({
+        company_id: companyId,
+        search: searchTwo ? searchTwo : "",
+        from_date: range[0],
+        to_date: range[1],
+      });
+    }
+  };
+  const handleSelect3 = (array) => {
+    let range = array.join(",").split(",");
+    setDatesThree([...range]);
+
+    if (range.length === 2) {
+      getCarPlateList({
+        company_id: companyId,
+        search: searchThree ? searchThree : "",
+        from_date: range[0],
+        to_date: range[1],
+      });
+    }
+  };
+
   const handlePageClick1 = ({ selected: page }) => {
-    getComplaints(companyId, page + 1);
+    getComplaints(
+      {
+        company_id: companyId,
+        search: searchOne ? searchOne : "",
+        from_date: "",
+        to_date: "",
+      },
+      page + 1
+    );
   };
   const handlePageClick2 = ({ selected: page }) => {
-    getDrivers(companyId, page + 1);
+    getDrivers(
+      {
+        company_id: companyId,
+        search: searchTwo ? searchTwo : "",
+        from_date: "",
+        to_date: "",
+      },
+      page + 1
+    );
   };
   const handlePageClick3 = ({ selected: page }) => {
-    getCarPlateList(companyId, page + 1);
+    getCarPlateList(
+      {
+        company_id: companyId,
+        search: searchThree ? searchThree : "",
+        from_date: "",
+        to_date: "",
+      },
+      page + 1
+    );
   };
   return (
     <div>
@@ -202,8 +334,14 @@ const CompanyDetails = ({
                   className="second d-flex w-100"
                   style={{ justifyContent: "space-between" }}
                 >
-                  <Searchbar />
-                  <Filter />
+                  <SearchbarFilter
+                    setSearch={setSearchOne}
+                    search={searchOne}
+                  />
+                  <CalenderFilter
+                    handleSelect={handleSelect1}
+                    dates={datesOne}
+                  />
                 </div>
               </div>
             </div>
@@ -234,8 +372,14 @@ const CompanyDetails = ({
                   className="second d-flex w-100"
                   style={{ justifyContent: "space-between" }}
                 >
-                  <Searchbar />
-                  <Filter />
+                  <SearchbarFilter
+                    setSearch={setSearchTwo}
+                    search={searchTwo}
+                  />
+                  <CalenderFilter
+                    handleSelect={handleSelect2}
+                    dates={datesTwo}
+                  />
                 </div>
               </div>
             </div>
@@ -266,8 +410,14 @@ const CompanyDetails = ({
                   className="second d-flex w-100"
                   style={{ justifyContent: "space-between" }}
                 >
-                  <Searchbar />
-                  <Filter />
+                  <SearchbarFilter
+                    setSearch={setSearchThree}
+                    search={searchThree}
+                  />
+                  <CalenderFilter
+                    handleSelect={handleSelect3}
+                    dates={datesThree}
+                  />
                 </div>
               </div>
             </div>

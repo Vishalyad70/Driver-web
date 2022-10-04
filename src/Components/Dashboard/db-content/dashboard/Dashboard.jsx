@@ -48,7 +48,7 @@ const Dashboard = () => {
       <div className="white_box">
         <h5 className="db_title">Recent</h5>
         <div className="open_nas">
-          <div className="view_box mb-2">
+          {/* <div className="view_box mb-2">
             <div className="web_status">
               <div
                 className="second d-flex w-100"
@@ -58,7 +58,7 @@ const Dashboard = () => {
                 <Filter />
               </div>
             </div>
-          </div>
+          </div> */}
 
           <RecentTable
             companies={recent_companies || []}
