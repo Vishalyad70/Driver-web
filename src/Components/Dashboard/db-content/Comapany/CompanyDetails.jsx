@@ -493,11 +493,10 @@ const mapStateToProps = ({
 const mapDispatchToProps = (dispatch) => {
   return {
     getCompanyDetail: (companyId) => dispatch(getCompanyDetail(companyId)),
-    getDrivers: (companyId, page) => dispatch(getDrivers(companyId, page)),
-    getComplaints: (companyId, page) =>
-      dispatch(getComplaints(companyId, page)),
-    getCarPlateList: (companyId, page) =>
-      dispatch(getCarPlateList(companyId, page)),
+    getDrivers: (payload, page) => dispatch(getDrivers(payload, page)),
+    getComplaints: (payload, page) => dispatch(getComplaints(payload, page)),
+    getCarPlateList: (payload, page) =>
+      dispatch(getCarPlateList(payload, page)),
     resetDetail: () => {
       dispatch({ type: RESET_DRIVER_LIST });
       dispatch({ type: RESET_COMPANY_DETAIL });
