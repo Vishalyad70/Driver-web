@@ -42,6 +42,7 @@ export const CompanyTable = ({
             <th>Company Name</th>
             <th>Date and Time</th>
             <th>Total Car Plates</th>
+            <th>Total Car Plates Available</th>
             <th>Total Drivers</th>
             <th>Total Complaints</th>
             {/* <th>Rating</th> */}
@@ -80,6 +81,7 @@ export const CompanyTable = ({
                   <td>{company.date_time}</td>
                 </td>
                 <td>{company.total_numbar_plate}</td>
+                <td>{company.total_car_plats_available}</td>
                 <td>{company.total_driver}</td>
                 <td>{company.total_complaints}</td>
                 {/* <td>{company.rating || 0}</td> */}
