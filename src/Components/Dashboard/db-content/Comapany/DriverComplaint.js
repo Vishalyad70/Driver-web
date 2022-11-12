@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Table, InputGroup } from "react-bootstrap";
-import { Icon } from "@iconify/react";
-import imageurl from "../../../common/images";
+import { Table } from "react-bootstrap";
+// import { Icon } from "@iconify/react";
+// import imageurl from "../../../common/images";
 import Checkbox from "../../../../Shared/Checkbox";
 
 export const DriverComplaint = ({ complaints, setIsCheck, isCheck }) => {

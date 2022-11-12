@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
-import { Searchbar } from "../../../../Shared/Searchbar";
-import { Filter } from "../../../../Shared/Filter";
+// import { Searchbar } from "../../../../Shared/Searchbar";
+// import { Filter } from "../../../../Shared/Filter";
 import { DASHBOARD_CARDS } from "../../../common/constant";
 import { useSelector, useDispatch } from "react-redux";
 import {

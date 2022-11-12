@@ -19,6 +19,12 @@ const APIs = {
   GET_COMPANY_CARPLATE_LIST: "/company/company_carPlates_ist",
   GET_COMPANY_COMPLAINT_LIST: "/company/driver_complaintsList",
   DOWNLOAD_COMPANY_CSV: "/company/download_csv_companyList",
+
+  DOWNLOAD_COMPANY_DRIVER_LIST_CSV: "/company/forAdmincsvDownloadOfDriverList",
+  DOWNLOAD_COMPANY_COMPLAINT_LIST_CSV:
+    "/company/forAdmincsvDownloadOfComplaintList",
+  DOWNLOAD_COMPANY_CAR_PLATE_LIST_CSV:
+    "/company/forAdmincsvDownloadOfCarplateList",
 };
- 
+
 export { BASE_URL, COOKIE_EXPIRED, APIs, AUTHORIZATION };

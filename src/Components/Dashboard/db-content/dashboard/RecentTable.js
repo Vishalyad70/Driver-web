@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Table } from "react-bootstrap";
-import { Icon } from "@iconify/react";
+// import { Icon } from "@iconify/react";
 import imageurl from "../../../common/images";
 import { Link } from "react-router-dom";
-import { dateToFormat } from "../../../common/_helper";
+// import { dateToFormat } from "../../../common/_helper";
 import Checkbox from "../../../../Shared/Checkbox";
 export const RecentTable = ({ companies, setIsCheck, isCheck }) => {
   const [isCheckAll, setIsCheckAll] = useState(false);

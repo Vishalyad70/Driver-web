@@ -291,3 +291,78 @@ export const downloadCSV = async (setDownloading) => {
     toast.error(err.message);
   }
 };
+
+export const downloadCompanyComplaintCSV = async (
+  companyId,
+  setDownloading
+) => {
+  try {
+    setToken();
+    const { data } = await AXIOS.get(
+      `${APIs.DOWNLOAD_COMPANY_COMPLAINT_LIST_CSV}/${companyId}`
+    );
+    const blob = new Blob([data], { type: "data:text/csv;charset=utf-8," });
+    const blobURL = window.URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.download = `company-complaint-list.csv`;
+    anchor.href = blobURL;
+    anchor.dataset.downloadurl = [
+      "text/csv",
+      anchor.download,
+      anchor.href,
+    ].join(":");
+    anchor.click();
+    setDownloading(false);
+  } catch (err) {
+    setDownloading(false);
+    toast.error(err.message);
+  }
+};
+
+export const downloadCompanyDriverCSV = async (companyId, setDownloading) => {
+  try {
+    setToken();
+    const { data } = await AXIOS.get(
+      `${APIs.DOWNLOAD_COMPANY_DRIVER_LIST_CSV}/${companyId}`
+    );
+    const blob = new Blob([data], { type: "data:text/csv;charset=utf-8," });
+    const blobURL = window.URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.download = `company-driver-list.csv`;
+    anchor.href = blobURL;
+    anchor.dataset.downloadurl = [
+      "text/csv",
+      anchor.download,
+      anchor.href,
+    ].join(":");
+    anchor.click();
+    setDownloading(false);
+  } catch (err) {
+    setDownloading(false);
+    toast.error(err.message);
+  }
+};
+
+export const downloadCompanyCarPlateCSV = async (companyId, setDownloading) => {
+  try {
+    setToken();
+    const { data } = await AXIOS.get(
+      `${APIs.DOWNLOAD_COMPANY_CAR_PLATE_LIST_CSV}/${companyId}`
+    );
+    const blob = new Blob([data], { type: "data:text/csv;charset=utf-8," });
+    const blobURL = window.URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.download = `company-car-plate-list.csv`;
+    anchor.href = blobURL;
+    anchor.dataset.downloadurl = [
+      "text/csv",
+      anchor.download,
+      anchor.href,
+    ].join(":");
+    anchor.click();
+    setDownloading(false);
+  } catch (err) {
+    setDownloading(false);
+    toast.error(err.message);
+  }
+};

@@ -3,7 +3,7 @@ import { useParams, withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import { SearchbarFilter } from "../../../../Shared/SearchbarFilter";
-import { Filter } from "../../../../Shared/Filter";
+// import { Filter } from "../../../../Shared/Filter";
 import { DriverComplaint } from "./DriverComplaint";
 import { DriverStatus } from "./DriverStatus";
 import { Row, Col, Form } from "react-bootstrap";
@@ -11,6 +11,9 @@ import imageurl from "../../../common/images";
 import { connect } from "react-redux";
 import SiteLoader from "../../../SiteLoader/SiteLoader";
 import {
+  downloadCompanyCarPlateCSV,
+  downloadCompanyComplaintCSV,
+  downloadCompanyDriverCSV,
   getCarPlateList,
   getCompanyDetail,
   getComplaints,
@@ -52,7 +55,7 @@ const CompanyDetails = ({
 }) => {
   const [isCheck, setIsCheck] = useState([]);
   const [isCheck2, setIsCheck2] = useState([]);
-  const [isCheck3, setIsCheck3] = useState([]);
+  // const [isCheck3, setIsCheck3] = useState([]);
   const { companyId } = useParams();
   const [searchOne, setSearchOne] = useState(null);
   const [searchTwo, setSearchTwo] = useState(null);
@@ -60,6 +63,9 @@ const CompanyDetails = ({
   const [datesOne, setDatesOne] = useState([]);
   const [datesTwo, setDatesTwo] = useState([]);
   const [datesThree, setDatesThree] = useState([]);
+  const [downloadingOne, setDownloadingOne] = useState(false);
+  const [downloadingTwo, setDownloadingTwo] = useState(false);
+  const [downloadingThree, setDownloadingThree] = useState(false);
 
   useEffect(() => {
     getCompanyDetail(companyId);
@@ -82,7 +88,14 @@ const CompanyDetails = ({
       to_date: "",
     });
     return () => resetDetail();
-  }, [getCompanyDetail, getDrivers, companyId, resetDetail]);
+  }, [
+    getCompanyDetail,
+    getDrivers,
+    getComplaints,
+    getCarPlateList,
+    companyId,
+    resetDetail,
+  ]);
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
@@ -342,6 +355,19 @@ const CompanyDetails = ({
                     handleSelect={handleSelect1}
                     dates={datesOne}
                   />
+                  <button
+                    className="sign_btn down_csv d-block"
+                    onClick={() => {
+                      setDownloadingOne(true);
+                      downloadCompanyComplaintCSV(companyId, setDownloadingOne);
+                    }}
+                    disabled={downloadingOne}
+                  >
+                    <Icon icon="fa6-solid:download" color="black" />
+                    <span>
+                      {downloadingOne ? "Downloading..." : "Download CSV"}
+                    </span>
+                  </button>
                 </div>
               </div>
             </div>
@@ -380,6 +406,19 @@ const CompanyDetails = ({
                     handleSelect={handleSelect2}
                     dates={datesTwo}
                   />
+                  <button
+                    className="sign_btn down_csv d-block"
+                    onClick={() => {
+                      setDownloadingTwo(true);
+                      downloadCompanyDriverCSV(companyId, setDownloadingTwo);
+                    }}
+                    disabled={downloadingTwo}
+                  >
+                    <Icon icon="fa6-solid:download" color="black" />
+                    <span>
+                      {downloadingTwo ? "Downloading..." : "Download CSV"}
+                    </span>
+                  </button>
                 </div>
               </div>
             </div>
@@ -418,6 +457,22 @@ const CompanyDetails = ({
                     handleSelect={handleSelect3}
                     dates={datesThree}
                   />
+                  <button
+                    className="sign_btn down_csv d-block"
+                    onClick={() => {
+                      setDownloadingThree(true);
+                      downloadCompanyCarPlateCSV(
+                        companyId,
+                        setDownloadingThree
+                      );
+                    }}
+                    disabled={downloadingThree}
+                  >
+                    <Icon icon="fa6-solid:download" color="black" />
+                    <span>
+                      {downloadingThree ? "Downloading..." : "Download CSV"}
+                    </span>
+                  </button>
                 </div>
               </div>
             </div>

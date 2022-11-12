@@ -1,7 +1,7 @@
 import React from "react";
 import Modal from "react-bootstrap/Modal";
 import { Icon } from "@iconify/react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import "./modal.css";
 
 export const MailverifyLink = (props) => {

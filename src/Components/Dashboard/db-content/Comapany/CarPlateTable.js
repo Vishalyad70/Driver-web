@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Table, InputGroup } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import Checkbox from "../../../../Shared/Checkbox";
 
 export const CarPlateTable = ({ car_plates, setIsCheck, isCheck }) => {
