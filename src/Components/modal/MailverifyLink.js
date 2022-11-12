@@ -12,7 +12,6 @@ export const MailverifyLink = (props) => {
           <span>
             <Icon icon="fluent:mail-20-filled" />
           </span>
-          {/* closeButton={props.onHide} */}
         </Modal.Header>
         <Modal.Body>
           <p>Your reset password link has been sent to your email.</p>
