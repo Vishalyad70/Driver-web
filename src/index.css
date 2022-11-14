@@ -59,3 +59,9 @@ input[type="number"] {
   position: relative;
   top: 12px;
 }
+
+
+.update_comment_btn {
+  background-color: #000 !important;
+  color: white !important;
+}

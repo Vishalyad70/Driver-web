@@ -3,9 +3,12 @@ import { Table } from "react-bootstrap";
 // import { Icon } from "@iconify/react";
 // import imageurl from "../../../common/images";
 import Checkbox from "../../../../Shared/Checkbox";
+import CommentModal from "./CommentModal";
 
 export const DriverComplaint = ({ complaints, setIsCheck, isCheck }) => {
   const [isCheckAll, setIsCheckAll] = useState(false);
+  const [showModal, setShowModal] = useState();
+  const [comment, setComment] = useState(null);
   const handleSelectAll = (e) => {
     setIsCheckAll(!isCheckAll);
     setIsCheck(complaints.map((li) => li.id));
@@ -39,6 +42,7 @@ export const DriverComplaint = ({ complaints, setIsCheck, isCheck }) => {
             <th>Complaint Reason</th>
             <th>Date/Time</th>
             <th>Location</th>
+            <th>Comment</th>
           </tr>
         </thead>
         <tbody>
@@ -60,6 +64,18 @@ export const DriverComplaint = ({ complaints, setIsCheck, isCheck }) => {
                 <td>{complaint.complaint_reason}</td>
                 <td>{complaint.complaint_date}</td>
                 <td>{complaint.location || "NA"}</td>
+                <td>
+                  {" "}
+                  <button
+                    className="btn btn-sm mt-3 update_comment_btn"
+                    onClick={() => {
+                      setComment(complaint.comment);
+                      setShowModal(true);
+                    }}
+                  >
+                    Comment
+                  </button>
+                </td>
               </tr>
             ))}
           {complaints.length === 0 && (
@@ -71,6 +87,16 @@ export const DriverComplaint = ({ complaints, setIsCheck, isCheck }) => {
           )}
         </tbody>
       </Table>
+      {showModal && (
+        <CommentModal
+          show={showModal}
+          onHide={() => {
+            setComment(null);
+            setShowModal(false);
+          }}
+          comment={comment || ""}
+        />
+      )}
     </div>
   );
 };
