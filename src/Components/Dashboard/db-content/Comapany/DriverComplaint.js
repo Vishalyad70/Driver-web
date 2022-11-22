@@ -73,7 +73,7 @@ export const DriverComplaint = ({ complaints, setIsCheck, isCheck }) => {
                       setShowModal(true);
                     }}
                   >
-                    Comment
+                    View comment
                   </button>
                 </td>
               </tr>
